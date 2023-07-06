@@ -47,7 +47,7 @@ pytz==2023.3
 #pywin32
 pyzmq==25.0.0
 scikit-learn
-scipy==1.10.1
+scipy
 seaborn==0.12.2
 six==1.16.0
 sklearn==0.0.post5

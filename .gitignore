@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 #fastapi
-fastapi-env/
+/fastapi-env

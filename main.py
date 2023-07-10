@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import pandas as pd
-
+import sklearn as sk
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Cargar el archivo CSV en un DataFrame
@@ -107,7 +107,7 @@ def recomendacion( titulo: str ):
     if titulo not in df['title'].values:
         return {'Respuesta': 'El título no existe en el DataFrame'}
 
-    df_reducido = df.head(5000)
+    df_reducido = df.head(20000)
     df_similitud_titulos = df_reducido['title'].tolist()
     
     tfidf_vectorizer = TfidfVectorizer(stop_words='english', use_idf=True)
@@ -124,8 +124,13 @@ def recomendacion( titulo: str ):
 
     search_df = pd.DataFrame(columnas_df, index=etiquetas_filas).T
 
+    # Referencia a la última columna y anteúltima para eliminar valores = 0 
     ultima_columna = etiquetas_filas[len(etiquetas_filas) - 1]
     search_df = search_df[search_df[ultima_columna] > 0]
+    if len(etiquetas_filas) > 1:
+        anteultima_columna = etiquetas_filas[len(etiquetas_filas) - 2]
+        search_df = search_df[search_df[anteultima_columna] > 0]
+
     test = search_df.sort_values([ultima_columna], ascending=[False])
     ranking5 = test.head(5)
 

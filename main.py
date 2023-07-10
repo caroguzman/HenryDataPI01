@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import pandas as pd
-import sklearn as sk
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Cargar el archivo CSV en un DataFrame

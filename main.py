@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 import pandas as pd
+import sklearn as sk
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Cargar el archivo CSV en un DataFrame
 df = pd.read_csv('./Dataset/datosMoviesPI01.csv',  encoding='latin-1')
@@ -8,7 +10,7 @@ app = FastAPI()
 
 @app.get("/")
 def index():
-    return "Bienvenidos al sistema de Recomendación de Películas de Henry"
+    return {"mensaje": "Bienvenidos al sistema de Recomendación de Películas de Henry" }
 
 @app.get("/peliculas_idioma/{idioma}")
 def peliculas_idioma( idioma: str ):
@@ -19,7 +21,7 @@ def peliculas_idioma( idioma: str ):
     cantidad_peliculas = len(peliculas_filtradas)
 
     # Retornar la cantidad de películas
-    return cantidad_peliculas
+    return {"cantidad_peliculas": cantidad_peliculas}
 
 @app.get("/peliculas_duracion/{pelicula}")
 def peliculas_duracion( pelicula: str ):
@@ -33,9 +35,9 @@ def peliculas_duracion( pelicula: str ):
         anio = pelicula_filtrada['release_year'].values[0]
 
         # Devolver el resultado formateado
-        return f"{pelicula}. Duración: {duracion} minutos. Año: {anio}"
+        return {"duracion" : f"{pelicula}. Duración: {duracion} minutos. Año: {anio}"}
     else:
-        return "La película no fue encontrada."
+        return {"mensaje": "La película no fue encontrada."}
     
     
 @app.get("/franquicia/{franquicia}")
@@ -50,9 +52,9 @@ def franquicia( franquicia: str ):
         ganancia_promedio = franquicia_filtrada['revenue'].mean()
 
         # Devolver el resultado formateado
-        return f"La franquicia {franquicia} posee {cantidad_peliculas} películas, una ganancia total de {ganancia_total} y una ganancia promedio de {ganancia_promedio}"
+        return {f"La franquicia {franquicia} posee {cantidad_peliculas} películas, una ganancia total de {ganancia_total} y una ganancia promedio de {ganancia_promedio}"}
     else:
-        return "La franquicia no fue encontrada o no tiene películas asociadas."
+        return {"mensaje": "La franquicia no fue encontrada o no tiene películas asociadas."}
     
 @app.get("/peliculas_pais/{pais}")
 def peliculas_pais( pais: str ):
@@ -63,7 +65,7 @@ def peliculas_pais( pais: str ):
     cantidad_peliculas = len(peliculas_pais_filtradas)
 
     # Devolver el resultado formateado
-    return f"Se produjeron {cantidad_peliculas} películas en el país {pais}"
+    return "Se produjeron {cantidad_peliculas} películas en el país {pais}"
 
 @app.get("/productoras_exitosas/{productora}")
 def productoras_exitosas( productora: str ):
@@ -97,3 +99,33 @@ def get_director(nombre_director):
         return f"El éxito del director {nombre_director} es: {exito}. Películas: {lista}"
     else:
         return "Director no ha sido encontrado en el dataset"
+    
+@app.get("/peliculas_recomendadas/{titulo}")
+def recomendacion( titulo: str ):
+    df_similitud_titulos = df['title'].tolist()
+    
+    tfidf_vectorizer = TfidfVectorizer(stop_words='english', use_idf=True)
+    df_similitud_titulos2 = tfidf_vectorizer.fit_transform(df_similitud_titulos)
+    df_tfidf = pd.DataFrame(df_similitud_titulos2.toarray(),columns=tfidf_vectorizer.get_feature_names_out())
+
+    titulo_buscar = titulo
+    titulo_buscar = titulo_buscar.lower()
+    
+    palabras_clave = titulo_buscar.split()
+    columnas_df = [df_tfidf[palabra] for palabra in palabras_clave]
+    columnas_df.append(sum(columnas_df))
+    etiquetas_filas = palabras_clave + [" + ".join(palabras_clave)]
+
+    search_df = pd.DataFrame(columnas_df, index=etiquetas_filas).T
+
+    ultima_columna = etiquetas_filas[len(etiquetas_filas) - 1]
+    search_df = search_df[search_df[ultima_columna] > 0]
+    test = search_df.sort_values([ultima_columna], ascending=[False])
+    ranking5 = test.head(5)
+
+    recomendadas = ranking5.index
+    #buscar el nombre de las 5 peliculas más similares a la ingresada 
+    peliculas_recomendadas = []
+    recomendadas = ranking5.index
+    peliculas_recomendadas = [df_similitud_titulos[indice] for indice in recomendadas]
+    return {peliculas_recomendadas}

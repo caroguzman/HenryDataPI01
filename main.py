@@ -134,4 +134,4 @@ def recomendacion( titulo: str ):
     peliculas_recomendadas = []
     recomendadas = ranking5.index
     peliculas_recomendadas = [df_similitud_titulos[indice] for indice in recomendadas]
-    return {peliculas_recomendadas}
+    return peliculas_recomendadas

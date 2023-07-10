@@ -102,7 +102,8 @@ def get_director(nombre_director):
     
 @app.get("/peliculas_recomendadas/{titulo}")
 def recomendacion( titulo: str ):
-    df_similitud_titulos = df['title'].tolist()
+    df_reducido = df.head(5000)
+    df_similitud_titulos = df_reducido['title'].tolist()
     
     tfidf_vectorizer = TfidfVectorizer(stop_words='english', use_idf=True)
     df_similitud_titulos2 = tfidf_vectorizer.fit_transform(df_similitud_titulos)

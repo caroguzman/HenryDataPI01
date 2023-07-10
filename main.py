@@ -101,7 +101,12 @@ def get_director(nombre_director):
         return "Director no ha sido encontrado en el dataset"
     
 @app.get("/peliculas_recomendadas/{titulo}")
-def recomendacion( titulo: str ):
+def recomendacion( titulo: str ): 
+
+    # Verificar si el título existe en el DataFrame original
+    if titulo not in df['title'].values:
+        return {'Respuesta': 'El título no existe en el DataFrame'}
+
     df_reducido = df.head(5000)
     df_similitud_titulos = df_reducido['title'].tolist()
     

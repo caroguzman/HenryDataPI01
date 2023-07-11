@@ -118,7 +118,7 @@ def recomendacion( titulo: str ):
     titulo_buscar = titulo
     #titulo_buscar = titulo_buscar.lower()
     overview_buscado = df_reducido.loc[df_reducido['title'] == titulo_buscar, 'overview'].iloc[0].split()
-    palabras_clave = overview_buscado.lower()
+    palabras_clave = overview_buscado
     
     #palabras_clave = titulo_buscar.split()
     columnas_df = [df_tfidf[palabra] for palabra in palabras_clave]

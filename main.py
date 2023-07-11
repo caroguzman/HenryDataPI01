@@ -21,7 +21,7 @@ def peliculas_idioma( idioma: str ):
     cantidad_peliculas = len(peliculas_filtradas)
 
     # Retornar la cantidad de películas
-    return {"cantidad_peliculas": cantidad_peliculas}
+    return {'idioma': idioma, 'cantidad': cantidad_peliculas}
 
 @app.get("/peliculas_duracion/{pelicula}")
 def peliculas_duracion( pelicula: str ):
@@ -35,7 +35,7 @@ def peliculas_duracion( pelicula: str ):
         anio = pelicula_filtrada['release_year'].values[0]
 
         # Devolver el resultado formateado
-        return {"duracion" : f"{pelicula}. Duración: {duracion} minutos. Año: {anio}"}
+        return {'pelicula': pelicula, 'duracion': duracion, 'anio': anio}
     else:
         return {"mensaje": "La película no fue encontrada."}
     
@@ -52,7 +52,7 @@ def franquicia( franquicia: str ):
         ganancia_promedio = franquicia_filtrada['revenue'].mean()
 
         # Devolver el resultado formateado
-        return {f"La franquicia {franquicia} posee {cantidad_peliculas} películas, una ganancia total de {ganancia_total} y una ganancia promedio de {ganancia_promedio}"}
+        return {'franquicia': franquicia, 'cantidad': cantidad_peliculas, 'ganancia_total': ganancia_total, 'ganancia_promedio': ganancia_promedio}
     else:
         return {"mensaje": "La franquicia no fue encontrada o no tiene películas asociadas."}
     
@@ -65,7 +65,7 @@ def peliculas_pais( pais: str ):
     cantidad_peliculas = len(peliculas_pais_filtradas)
 
     # Devolver el resultado formateado
-    return "Se produjeron {cantidad_peliculas} películas en el país {pais}"
+    return {'pais': pais, 'cantidad': cantidad_peliculas}
 
 @app.get("/productoras_exitosas/{productora}")
 def productoras_exitosas( productora: str ):
@@ -76,7 +76,7 @@ def productoras_exitosas( productora: str ):
     # Obtener la cantidad de películas realizadas
     cantidad_peliculas = len(peliculas_productora)
     # Devolver el resultado formateado
-    return f"La productora {productora} ha tenido un revenue de {revenue_total} y ha realizado {cantidad_peliculas} películas."
+    return {'productora': productora, 'revenue_total': revenue_total, 'cantidad': cantidad_peliculas}
 
 @app.get("/get_director/{nombre _director}")
 def get_director(nombre_director):
@@ -96,7 +96,7 @@ def get_director(nombre_director):
             lista.append([nombre, fecha_release, retorno, costo, ganancia])
         
         # Devolver el resultado formateado
-        return f"El éxito del director {nombre_director} es: {exito}. Películas: {lista}"
+        return {'director': nombre_director, 'retorno_total_director': exito, 'peliculas': lista}
     else:
         return "Director no ha sido encontrado en el dataset"
     
@@ -142,4 +142,4 @@ def recomendacion( titulo: str ):
     peliculas_recomendadas = []
     recomendadas = ranking5.index
     peliculas_recomendadas = [df_similitud_titulos[indice] for indice in recomendadas]
-    return peliculas_recomendadas
+    return {'lista_recomendada': peliculas_recomendadas}

@@ -4,7 +4,7 @@
 
 ## Objetivo
 Crear un modelo de ML que soluciona un problema de negocio de en una start-up que provee servicios de agregación de plataformas de streaming.
-## Deesarrollo
+## Desarrollo
 Para llevar a cabo el proyecto se definieron diferentes etapas de desarrollo:
 - **`Transformaciones`**_(Extract, Transform, and Load-ETL)_
   Se llevó a cabo los procesos de transformación de los datos que nos entrega la empresa, depurando cada columna del dataset como nos fue indicado.

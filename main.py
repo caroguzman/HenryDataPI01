@@ -139,7 +139,13 @@ def recomendacion( titulo: str ):
 
     recomendadas = ranking5.index
     #buscar el nombre de las 5 peliculas más similares a la ingresada 
+    #peliculas_recomendadas = []
+    #recomendadas = ranking5.index
+    #peliculas_recomendadas = [df_similitud_titulos[indice] for indice in recomendadas]
     peliculas_recomendadas = []
     recomendadas = ranking5.index
-    peliculas_recomendadas = [df_similitud_titulos[indice] for indice in recomendadas]
+    for indice in recomendadas:
+        overview = df_similitud_titulos[indice] 
+        titulo = df.loc[df['overview'] == overview, 'title'].values[0]  
+        peliculas_recomendadas.append(titulo)
     return {'lista_recomendada': peliculas_recomendadas}

@@ -7,6 +7,7 @@ Crear un modelo de ML que soluciona un problema de negocio de en una start-up qu
 ## Deesarrollo
 Para llevar a cabo el proyecto se definieron diferentes etapas de desarrollo:
 - **`Transformaciones`**_(Extract, Transform, and Load-ETL)_
+  Se llevó a cabo los procesos de transformación de los datos que nos entrega la empresa, depurando cada columna del dataset como nos fue indicado.
   (https://henry-pi01.onrender.com/docs)
 - **`Desarrollo API`** _(FastAPI)_
   Se desarrollaron 6 funciones para los endpoints de la api:
@@ -27,9 +28,9 @@ Para llevar a cabo el proyecto se definieron diferentes etapas de desarrollo:
   Para llevar a cabo el deployment de la API se utilizó render.
 - **`Análisis exploratorio de los datos`**: _(Exploratory Data Analysis-EDA)_
   Se investiga las relaciones que hay entre las variables de los datasets, se buscan outliers o anomalías, se normalizan las variables que van a ser utilizadas en el modelo.Se realiza un diagrama de nube de palabras. 
-- **`Sistema de recomendación`**: Se implementó Similitud del coseno y se puede consumir desde la API
+- **`Sistema de recomendación`**: Se implementó Similitud del coseno y se puede consumir desde la API con la función:
   - def **recomendacion( *`titulo`* )**:
-    Se ingresa el nombre de una película y te recomienda las similares en una lista de 5 valores.
+    donde se ingresa el nombre de una película y el sistema te recomienda las películas similares en una lista de 5 valores.
 - **`Video`**: Se realiza un video mostrando el resultado de las consultas propuestas y del modelo de ML entrenado.
 
 ## Documentación

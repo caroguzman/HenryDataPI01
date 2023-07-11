@@ -28,7 +28,7 @@ Para llevar a cabo el proyecto se definieron diferentes etapas de desarrollo:
   Para llevar a cabo el deployment de la API se utilizó render.
 - **`Análisis exploratorio de los datos`**: _(Exploratory Data Analysis-EDA)_ (https://github.com/caroguzman/HenryDataPI01/blob/master/PI01EDA.ipynb)
   Se investiga las relaciones que hay entre las variables de los datasets, se buscan outliers o anomalías, se normalizan las variables que van a ser utilizadas en el modelo.Se realiza un diagrama de nube de palabras. 
-- **`Sistema de recomendación`**: Se implementó Similitud del coseno y se puede consumir desde la API con la función:
+- **`Sistema de recomendación`**: (https://github.com/caroguzman/HenryDataPI01/blob/master/PI01RS.ipynb) Se implementó Similitud del coseno y se puede consumir desde la API con la función:
   - def **recomendacion( *`titulo`* )**:
     donde se ingresa el nombre de una película y el sistema te recomienda las películas similares en una lista de 5 valores.
 - **`Video`**: Se realiza un video mostrando el resultado de las consultas propuestas y del modelo de ML entrenado.

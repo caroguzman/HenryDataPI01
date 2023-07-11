@@ -8,8 +8,8 @@ Crear un modelo de ML que soluciona un problema de negocio de en una start-up qu
 Para llevar a cabo el proyecto se definieron diferentes etapas de desarrollo:
 - **`Transformaciones`**_(Extract, Transform, and Load-ETL)_
   Se llevó a cabo los procesos de transformación de los datos que nos entrega la empresa, depurando cada columna del dataset como nos fue indicado.
-  (https://henry-pi01.onrender.com/docs)
-- **`Desarrollo API`** _(FastAPI)_
+  (https://github.com/caroguzman/HenryDataPI01/blob/master/PI01.ipynb)
+- **`Desarrollo API`** _(FastAPI)_ 
   Se desarrollaron 6 funciones para los endpoints de la api:
     - def **peliculas_idioma( *`Idioma`: str* )**:
       Se ingresa un idioma (como están escritos en el dataset) y retorna la cantidad de películas producidas en ese idioma.

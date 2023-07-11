@@ -4,7 +4,7 @@ import sklearn as sk
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Cargar el archivo CSV en un DataFrame
-df = pd.read_csv('./Dataset/datosMoviesPI01.csv',  encoding='latin-1')
+df = pd.read_csv('./Dataset/datosMoviesPI01.csv',  encoding='utf-8')
 #instanciamos la clase
 app = FastAPI()
 
@@ -100,24 +100,27 @@ def get_director(nombre_director):
     else:
         return "Director no ha sido encontrado en el dataset"
     
-@app.get("/peliculas_recomendadas/{titulo}")
+@app.get("/recomendacion/{titulo}")
 def recomendacion( titulo: str ): 
 
     # Verificar si el título existe en el DataFrame original
     if titulo not in df['title'].values:
         return {'Respuesta': 'El título no existe en el DataFrame'}
 
-    df_reducido = df.head(20000)
-    df_similitud_titulos = df_reducido['title'].tolist()
+    df_reducido = df.head(2000)
+    df_similitud_titulos = []
+    df_similitud_titulos = df_reducido['overview'].astype(str).tolist()
     
     tfidf_vectorizer = TfidfVectorizer(stop_words='english', use_idf=True)
     df_similitud_titulos2 = tfidf_vectorizer.fit_transform(df_similitud_titulos)
     df_tfidf = pd.DataFrame(df_similitud_titulos2.toarray(),columns=tfidf_vectorizer.get_feature_names_out())
 
     titulo_buscar = titulo
-    titulo_buscar = titulo_buscar.lower()
+    #titulo_buscar = titulo_buscar.lower()
+    overview_buscado = df_reducido.loc[df_reducido['title'] == titulo_buscar, 'overview'].iloc[0].split()
+    palabras_clave = overview_buscado
     
-    palabras_clave = titulo_buscar.split()
+    #palabras_clave = titulo_buscar.split()
     columnas_df = [df_tfidf[palabra] for palabra in palabras_clave]
     columnas_df.append(sum(columnas_df))
     etiquetas_filas = palabras_clave + [" + ".join(palabras_clave)]

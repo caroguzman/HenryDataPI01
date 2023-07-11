@@ -26,7 +26,7 @@ Para llevar a cabo el proyecto se definieron diferentes etapas de desarrollo:
 - **`Deployment`**_(render)_
   (https://henry-pi01.onrender.com/docs)
   Para llevar a cabo el deployment de la API se utilizó render.
-- **`Análisis exploratorio de los datos`**: _(Exploratory Data Analysis-EDA)_
+- **`Análisis exploratorio de los datos`**: _(Exploratory Data Analysis-EDA)_ (https://github.com/caroguzman/HenryDataPI01/blob/master/PI01EDA.ipynb)
   Se investiga las relaciones que hay entre las variables de los datasets, se buscan outliers o anomalías, se normalizan las variables que van a ser utilizadas en el modelo.Se realiza un diagrama de nube de palabras. 
 - **`Sistema de recomendación`**: Se implementó Similitud del coseno y se puede consumir desde la API con la función:
   - def **recomendacion( *`titulo`* )**:
